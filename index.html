@@ -465,23 +465,44 @@ function updateResults() {
     }
 }
 
-function submitVote() {
-
+async function submitVote() {
     if (selectedCharacter === "") {
         alert("Please choose a character first.");
         return;
     }
 
-    votes[selectedCharacter]++;
+    try {
+        const response = await fetch(
+            "https://soft-sun-0c0e.alkasseerethan.workers.dev/vote"
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    character: selectedCharacter
+                })
+            }
+        );
 
-    localStorage.setItem("survivalVotes", JSON.stringify(votes));
+        if (!response.ok) {
+            throw new Error("Vote failed");
+        }
 
-    document.getElementById(voteId[selectedCharacter]).textContent =
-        "Votes: " + votes[selectedCharacter];
+        const data = await response.json();
 
-    updateResults();
+        votes[selectedCharacter] = data.votes;
+        localStorage.setItem("survivalVotes", JSON.stringify(votes));
 
-    alert("Vote submitted for: " + selectedCharacter);
+        document.getElementById(voteId[selectedCharacter]).textContent =
+            "Votes: " + votes[selectedCharacter];
+
+        updateResults();
+        alert("Vote submitted for: " + selectedCharacter);
+
+    } catch (error) {
+        alert("Vote failed. Please try again.");
+    }
 }
 
 window.onload = function() {
