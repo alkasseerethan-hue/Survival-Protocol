@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Survival Protocol</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            color: white;
+            background: #080808;
+        }
+
+        .hero {
+            min-height: 70vh;
+
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+
+            text-align: center;
+
+            background: url("background.jpg") center center / cover no-repeat;
+
+            padding: 30px;
+        }
+
+        .hero h1 {
+            margin: 0;
+
+            font-size: 55px;
+            letter-spacing: 8px;
+        }
+
+        .hero p {
+            font-size: 20px;
+            letter-spacing: 3px;
+        }
+
+        main {
+            padding: 50px 8%;
+            background: #080808;
+        }
+
+        h2 {
+            text-align: center;
+
+            font-size: 32px;
+            letter-spacing: 5px;
+
+            margin: 40px 0 30px;
+        }
+
+        .characters {
+            display: grid;
+
+            grid-template-columns:
+                repeat(auto-fit, minmax(180px, 1fr));
+
+            gap: 20px;
+        }
+
+      .character {
+    background: #111;
+
+    border: 1px solid #333;
+
+    padding: 12px;
+
+    text-align: center;
+
+    transition: 0.3s;
+
+    overflow: hidden;
+}
+
+      .character:hover {
+    transform: translateY(-8px);
+
+    border-color: #b00000;
+
+    box-shadow: 0 8px 25px rgba(176, 0, 0, 0.35);
+}
+
+        .character-name {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.character img {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    display: block;
+    margin-bottom: 15px;
+}
+
+      button {
+    border: none;
+    background: #a00000;
+    color: white;
+    padding: 11px 28px;
+    cursor: pointer;
+    font-weight: bold;
+    letter-spacing: 2px;
+    transition: 0.2s;
+}
+
+button:hover {
+    background: #d00000;
+    transform: scale(1.03);
+}
+#selected-character {
+    text-align: center;
+    font-size: 22px;
+    font-weight: bold;
+    margin-bottom: 30px;
+}
+#vote-reason {
+    display: block;
+    width: 100%;
+    max-width: 600px;
+    height: 100px;
+    margin: 0 auto 20px;
+    padding: 15px;
+    background: #111;
+    color: white;
+    border: 1px solid #333;
+    resize: vertical;
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+}
+
+#vote-reason:focus {
+    outline: none;
+    border-color: #b00000;
+}
+.vote-count {
+    font-size: 14px;
+    color: #aaa;
+    margin-bottom: 15px;
+}
+#vote-results {
+    margin: 50px auto;
+    max-width: 700px;
+    padding: 30px;
+    text-align: center;
+    background: #111;
+    border: 1px solid #333;
+}
+
+#vote-results h2 {
+    margin-top: 0;
+    margin-bottom: 20px;
+}
+
+#top-character {
+    font-size: 22px;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+#all-results {
+    width: 100%;
+    max-width: 600px;
+    margin: 20px auto 0;
+}
+
+#all-results div {
+    background: #151515;
+    border: 1px solid #333;
+    padding: 10px 15px;
+    margin-bottom: 6px;
+    font-size: 15px;
+    text-align: left;
+}
+.character {
+    min-height: 0;
+    height: auto;
+}
+
+.character img {
+    height: 220px;
+}
+
+.character-name {
+    min-height: 0;
+}
+    </style>
+</head>
+
+<body>
+
+    <header class="hero">
+
+        <h1>SURVIVAL PROTOCOL</h1>
+
+        <p>Choose your survivor</p>
+
+    </header>
+
+
+    <main>
+
+        <section class="voting-section">
+
+            <h2>HEROES</h2>
+
+<div class="characters">
+
+  <div class="character">
+    <img src="leon.jpg" alt="Leon S. Kennedy">
+    <div class="character-name">Leon S. Kennedy</div>
+    <div class="vote-count" id="votes-leon">Votes: 0</div>
+    <button onclick="selectCharacter('Leon S. Kennedy')">VOTE</button>
+</div>
+    <div class="character">
+    <img src="chris.jpg" alt="Chris Redfield">
+    <div class="character-name">Chris Redfield</div>
+    <div class="vote-count" id="votes-chris">Votes: 0</div>
+    <button onclick="selectCharacter('Chris Redfield')">VOTE</button>
+</div>
+
+  <div class="character">
+    <img src="jill.jpg" alt="Jill Valentine">
+    <div class="character-name">Jill Valentine</div>
+    <div class="vote-count" id="votes-jill">Votes: 0</div>
+    <button onclick="selectCharacter('Jill Valentine')">VOTE</button>
+</div>
+
+   <div class="character">
+    <img src="ada.jpg" alt="Ada Wong">
+    <div class="character-name">Ada Wong</div>
+    <div class="vote-count" id="votes-ada">Votes: 0</div>
+    <button onclick="selectCharacter('Ada Wong')">VOTE</button>
+</div>
+
+    <div class="character">
+    <img src="claire.jpg" alt="Claire Redfield">
+    <div class="character-name">Claire Redfield</div>
+    <div class="vote-count" id="votes-claire">Votes: 0</div>
+    <button onclick="selectCharacter('Claire Redfield')">VOTE</button>
+</div>
+
+    <div class="character">
+    <img src="sherry.jpg" alt="Sherry Birkin">
+    <div class="character-name">Sherry Birkin</div>
+    <div class="vote-count" id="votes-sherry">Votes: 0</div>
+    <button onclick="selectCharacter('Sherry Birkin')">VOTE</button>
+</div>
+
+    <div class="character">
+    <img src="rebecca.jpg" alt="Rebecca Chambers">
+    <div class="character-name">Rebecca Chambers</div>
+    <div class="vote-count" id="votes-rebecca">Votes: 0</div>
+    <button onclick="selectCharacter('Rebecca Chambers')">VOTE</button>
+</div>
+
+    <div class="character">
+    <img src="ethan.jpg" alt="Ethan Winters">
+    <div class="character-name">Ethan Winters</div>
+    <div class="vote-count" id="votes-ethan">Votes: 0</div>
+    <button onclick="selectCharacter('Ethan Winters')">VOTE</button>
+</div>
+
+    <div class="character">
+    <img src="barry.jpg" alt="Barry Burton">
+    <div class="character-name">Barry Burton</div>
+    <div class="vote-count" id="votes-barry">Votes: 0</div>
+    <button onclick="selectCharacter('Barry Burton')">VOTE</button>
+</div>
+
+    <div class="character">
+    <img src="luis.jpg" alt="Luis Sera">
+    <div class="character-name">Luis Sera</div>
+    <div class="vote-count" id="votes-luis">Votes: 0</div>
+    <button onclick="selectCharacter('Luis Sera')">VOTE</button>
+</div>
+
+</div>
+
+
+<h2>VILLAINS</h2>
+
+<div class="characters">
+
+    <div class="character">
+    <img src="wesker.jpg" alt="Albert Wesker">
+    <div class="character-name">Albert Wesker</div>
+    <div class="vote-count" id="votes-wesker">Votes: 0</div>
+    <button onclick="selectCharacter('Albert Wesker')">VOTE</button>
+</div>
+
+    <div class="character">
+    <img src="hunk.jpg" alt="HUNK">
+    <div class="character-name">HUNK</div>
+    <div class="vote-count" id="votes-hunk">Votes: 0</div>
+    <button onclick="selectCharacter('HUNK')">VOTE</button>
+</div>
+
+    <div class="character">
+    <img src="krauser.jpg" alt="Jack Krauser">
+    <div class="character-name">Jack Krauser</div>
+    <div class="vote-count" id="votes-krauser">Votes: 0</div>
+    <button onclick="selectCharacter('Jack Krauser')">VOTE</button>
+</div>
+
+    <div class="character">
+    <img src="dimitrescu.jpg" alt="Alcina Dimitrescu">
+    <div class="character-name">Alcina Dimitrescu</div>
+    <div class="vote-count" id="votes-dimitrescu">Votes: 0</div>
+    <button onclick="selectCharacter('Alcina Dimitrescu')">VOTE</button>
+</div>
+
+    <div class="character">
+    <img src="baker.jpg" alt="Jack Baker">
+    <div class="character-name">Jack Baker</div>
+    <div class="vote-count" id="votes-baker">Votes: 0</div>
+    <button onclick="selectCharacter('Jack Baker')">VOTE</button>
+</div>
+
+    <div class="character">
+    <img src="heisenberg.jpg" alt="Karl Heisenberg">
+    <div class="character-name">Karl Heisenberg</div>
+    <div class="vote-count" id="votes-heisenberg">Votes: 0</div>
+    <button onclick="selectCharacter('Karl Heisenberg')">VOTE</button>
+</div>
+
+   <div class="character">
+    <img src="spencer.jpg" alt="Oswell E. Spencer">
+    <div class="character-name">Oswell E. Spencer</div>
+    <div class="vote-count" id="votes-spencer">Votes: 0</div>
+    <button onclick="selectCharacter('Oswell E. Spencer')">VOTE</button>
+</div>
+
+    <div class="character">
+    <img src="salazar.jpg" alt="Ramón Salazar">
+    <div class="character-name">Ramón Salazar</div>
+    <div class="vote-count" id="votes-salazar">Votes: 0</div>
+    <button onclick="selectCharacter('Ramón Salazar')">VOTE</button>
+</div>
+
+    <div class="character">
+    <img src="zeno.jpg" alt="Zeno">
+    <div class="character-name">Zeno</div>
+    <div class="vote-count" id="votes-zeno">Votes: 0</div>
+    <button onclick="selectCharacter('Zeno')">VOTE</button>
+</div>
+
+</div>
+
+<div id="selected-character"></div>
+
+<textarea id="vote-reason" placeholder="Why did you choose them?"></textarea>
+
+<button id="submit-vote" onclick="submitVote()">SUBMIT VOTE</button>
+
+<div id="vote-results">
+    <h2>VOTE RESULTS</h2>
+    <div id="top-character">No votes yet</div>
+    <div id="all-results"></div>
+</div>
+        </section>
+
+    </main>
+<script>
+let selectedCharacter = "";
+
+let defaultVotes = {
+    "Leon S. Kennedy": 0,
+    "Chris Redfield": 0,
+    "Jill Valentine": 0,
+    "Ada Wong": 0,
+    "Claire Redfield": 0,
+    "Sherry Birkin": 0,
+    "Rebecca Chambers": 0,
+    "Ethan Winters": 0,
+    "Barry Burton": 0,
+    "Luis Sera": 0,
+    "Albert Wesker": 0,
+    "HUNK": 0,
+    "Jack Krauser": 0,
+    "Alcina Dimitrescu": 0,
+    "Jack Baker": 0,
+    "Karl Heisenberg": 0,
+    "Oswell E. Spencer": 0,
+    "Ramón Salazar": 0,
+    "Zeno": 0
+};
+
+let savedVotes = localStorage.getItem("survivalVotes");
+let votes = savedVotes ? JSON.parse(savedVotes) : defaultVotes;
+
+let voteId = {
+    "Leon S. Kennedy": "votes-leon",
+    "Chris Redfield": "votes-chris",
+    "Jill Valentine": "votes-jill",
+    "Ada Wong": "votes-ada",
+    "Claire Redfield": "votes-claire",
+    "Sherry Birkin": "votes-sherry",
+    "Rebecca Chambers": "votes-rebecca",
+    "Ethan Winters": "votes-ethan",
+    "Barry Burton": "votes-barry",
+    "Luis Sera": "votes-luis",
+    "Albert Wesker": "votes-wesker",
+    "HUNK": "votes-hunk",
+    "Jack Krauser": "votes-krauser",
+    "Alcina Dimitrescu": "votes-dimitrescu",
+    "Jack Baker": "votes-baker",
+    "Karl Heisenberg": "votes-heisenberg",
+    "Oswell E. Spencer": "votes-spencer",
+    "Ramón Salazar": "votes-salazar",
+    "Zeno": "votes-zeno"
+};
+
+function selectCharacter(character) {
+    selectedCharacter = character;
+
+    document.getElementById("selected-character").textContent =
+        "Selected: " + character;
+}
+
+function updateResults() {
+
+    let results = Object.entries(votes);
+
+    results.sort(function(a, b) {
+        return b[1] - a[1];
+    });
+
+    let resultsHTML = "";
+
+    results.forEach(function(item) {
+        resultsHTML +=
+            "<div>" + item[0] + " — " + item[1] + " votes</div>";
+    });
+
+    document.getElementById("all-results").innerHTML = resultsHTML;
+
+    let topCharacter = "No votes yet";
+    let highestVotes = 0;
+
+    for (let character in votes) {
+        if (votes[character] > highestVotes) {
+            highestVotes = votes[character];
+            topCharacter = character;
+        }
+    }
+
+    if (highestVotes > 0) {
+        document.getElementById("top-character").textContent =
+            "Leading: " + topCharacter + " — " + highestVotes + " votes";
+    } else {
+        document.getElementById("top-character").textContent =
+            "No votes yet";
+    }
+}
+
+function submitVote() {
+
+    if (selectedCharacter === "") {
+        alert("Please choose a character first.");
+        return;
+    }
+
+    votes[selectedCharacter]++;
+
+    localStorage.setItem("survivalVotes", JSON.stringify(votes));
+
+    document.getElementById(voteId[selectedCharacter]).textContent =
+        "Votes: " + votes[selectedCharacter];
+
+    updateResults();
+
+    alert("Vote submitted for: " + selectedCharacter);
+}
+
+window.onload = function() {
+
+    for (let character in votes) {
+        document.getElementById(voteId[character]).textContent =
+            "Votes: " + votes[character];
+    }
+
+    updateResults();
+};
+</script>
+</body>
+</html>
