@@ -376,7 +376,17 @@ button:hover {
 let selectedCharacter = "";
 
 const API_URL = "https://soft-sun-0c0e.alkasseerethan.workers.dev";
+let sessionToken =
+    new URLSearchParams(window.location.search).get("session") || "";
 
+if (sessionToken) {
+    localStorage.setItem("youtubeSession", sessionToken);
+}
+
+sessionToken =
+    sessionToken ||
+    localStorage.getItem("youtubeSession") ||
+    "";
 let votes = {
     "Leon S. Kennedy": 0,
     "Chris Redfield": 0,
@@ -500,11 +510,12 @@ async function submitVote() {
     button.textContent = "SUBMITTING...";
 
     try {
-        const response = await fetch(API_URL + "/vote", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
+       const response = await fetch(API_URL + "/vote", {
+    method: "POST",
+    headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer " + sessionToken
+    },
             body: JSON.stringify({
                 character: selectedCharacter,
                 reason: reasonBox.value.trim()
