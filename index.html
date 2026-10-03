@@ -375,7 +375,9 @@ button:hover {
 <script>
 let selectedCharacter = "";
 
-let defaultVotes = {
+const API_URL = "https://soft-sun-0c0e.alkasseerethan.workers.dev";
+
+let votes = {
     "Leon S. Kennedy": 0,
     "Chris Redfield": 0,
     "Jill Valentine": 0,
@@ -397,10 +399,7 @@ let defaultVotes = {
     "Zeno": 0
 };
 
-let savedVotes = localStorage.getItem("survivalVotes");
-let votes = savedVotes ? JSON.parse(savedVotes) : defaultVotes;
-
-let voteId = {
+const voteId = {
     "Leon S. Kennedy": "votes-leon",
     "Chris Redfield": "votes-chris",
     "Jill Valentine": "votes-jill",
@@ -424,13 +423,11 @@ let voteId = {
 
 function selectCharacter(character) {
     selectedCharacter = character;
-
     document.getElementById("selected-character").textContent =
         "Selected: " + character;
 }
 
 function updateResults() {
-
     let results = Object.entries(votes);
 
     results.sort(function(a, b) {
@@ -460,8 +457,33 @@ function updateResults() {
         document.getElementById("top-character").textContent =
             "Leading: " + topCharacter + " — " + highestVotes + " votes";
     } else {
-        document.getElementById("top-character").textContent =
-            "No votes yet";
+        document.getElementById("top-character").textContent = "No votes yet";
+    }
+}
+
+async function loadVotes() {
+    try {
+        const response = await fetch(API_URL + "/votes");
+
+        if (!response.ok) {
+            throw new Error("Could not load votes");
+        }
+
+        const serverVotes = await response.json();
+        votes = { ...votes, ...serverVotes };
+
+        for (let character in votes) {
+            const element = document.getElementById(voteId[character]);
+
+            if (element) {
+                element.textContent = "Votes: " + votes[character];
+            }
+        }
+
+        updateResults();
+    } catch (error) {
+        console.error("Vote loading error:", error);
+        updateResults();
     }
 }
 
@@ -471,49 +493,50 @@ async function submitVote() {
         return;
     }
 
-    try {
-        const response = await fetch(
-           "https://soft-sun-0c0e.alkasseerethan.workers.dev/vote",
-            {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                    character: selectedCharacter
-                })
-            }
-        );
+    const button = document.getElementById("submit-vote");
+    const reasonBox = document.getElementById("vote-reason");
 
-        if (!response.ok) {
-            throw new Error("Vote failed");
-        }
+    button.disabled = true;
+    button.textContent = "SUBMITTING...";
+
+    try {
+        const response = await fetch(API_URL + "/vote", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                character: selectedCharacter,
+                reason: reasonBox.value.trim()
+            })
+        });
 
         const data = await response.json();
 
+        if (!response.ok || !data.success) {
+            throw new Error(data.error || "Vote failed");
+        }
+
         votes[selectedCharacter] = data.votes;
-        localStorage.setItem("survivalVotes", JSON.stringify(votes));
 
         document.getElementById(voteId[selectedCharacter]).textContent =
-            "Votes: " + votes[selectedCharacter];
+            "Votes: " + data.votes;
+
+        reasonBox.value = "";
 
         updateResults();
-        alert("Vote submitted for: " + selectedCharacter);
 
+        alert("Vote submitted for: " + selectedCharacter);
     } catch (error) {
-        alert("Vote failed. Please try again.");
+        console.error("Vote submission error:", error);
+        alert("Could not submit the vote. Please try again.");
+    } finally {
+        button.disabled = false;
+        button.textContent = "SUBMIT VOTE";
     }
 }
 
-window.onload = function() {
-
-    for (let character in votes) {
-        document.getElementById(voteId[character]).textContent =
-            "Votes: " + votes[character];
-    }
-
-    updateResults();
-};
+window.onload = loadVotes;
 </script>
 </body>
 </html>
