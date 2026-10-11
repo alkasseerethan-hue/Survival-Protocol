@@ -195,6 +195,22 @@ button:hover {
 .character-name {
     min-height: 0;
 }
+.action-button {
+    background-color: #ffffff;
+    color: #111111;
+    border: 1px solid #cccccc;
+    padding: 12px 18px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.action-button.verified,
+.action-button.completed {
+    background-color: #16a34a;
+    color: #ffffff;
+    border-color: #16a34a;
+}
     </style>
 </head>
 
@@ -365,7 +381,6 @@ button:hover {
 <textarea id="vote-reason" placeholder="Why did you choose them?"></textarea>
 
 <button id="submit-vote" onclick="submitVote()">SUBMIT VOTE</button>
-
 <div id="vote-results">
     <h2>VOTE RESULTS</h2>
     <div id="top-character">No votes yet</div>
@@ -435,8 +450,14 @@ const voteId = {
 
 function selectCharacter(character) {
     selectedCharacter = character;
+
     document.getElementById("selected-character").textContent =
         "Selected: " + character;
+
+    document.getElementById("submit-vote").scrollIntoView({
+        behavior: "smooth",
+        block: "center"
+    });
 }
 
 function updateResults() {
