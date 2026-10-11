@@ -110,16 +110,26 @@ a { color:#fff; }
 <main>
 <header>
 <h1>SURVIVAL PROTOCOL</h1>
-<div class="subtitle">اختر الناجي</div>
-</header>
+<div class="steps">
+  <div class="step-card" id="step-one">
+    <h3>الخطوة الأولى</h3>
+    <p>اشترك في قناتنا على يوتيوب</p>
+    <button id="subscribe-channel" type="button">
+      اشترك في القناة
+    </button>
+  </div>
 
-<div class="notice">
-  <div id="status" class="status">تحقّق من اشتراكك بقناة يوتيوب قبل التصويت.</div>
+  <div class="step-card" id="step-two">
+    <h3>الخطوة الثانية</h3>
+    <p>تحقّق من اشتراكك في يوتيوب</p>
+    <button id="verify-subscription" type="button">
+      تحقّق من الاشتراك
+    </button>
+    <div id="status" class="status">
+      يرجى إتمام الاشتراك ثم التحقق للانتقال إلى التصويت.
+    </div>
+  </div>
 </div>
-
-<section>
-<h2>اختر شخصيتك</h2>
-<div id="characters" class="grid"></div>
 </section>
 
 <section class="panel" id="voting-panel">
