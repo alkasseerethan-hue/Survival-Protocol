@@ -8,7 +8,7 @@
 :root { color-scheme: dark; --red:#a80000; --green:#16a34a; }
 * { box-sizing:border-box; }
 body { margin:0; min-height:100vh; color:#f5f5f5; font-family:Arial,Helvetica,sans-serif; background:#080808; }
-body::before { content:""; position:fixed; inset:0; background:linear-gradient(#000b,#000d),url("./Background.jpg") center/cover fixed; z-index:-1; }
+body::before { content:""; position:fixed; inset:0; background:linear-gradient(#000b,#000d),url("./background.jpg") center/cover fixed; z-index:-1; }
 main { width:min(1100px,94%); margin:auto; padding:30px 0 60px; }
 header { text-align:center; padding:20px 0 26px; }
 h1 { margin:0; letter-spacing:.13em; color:#f3f3f3; font-size:clamp(2rem,5vw,3.6rem); text-shadow:0 0 20px #a00; }
@@ -230,6 +230,9 @@ function readSessionFromUrl() {
     sessionToken = incoming;
     localStorage.setItem("youtubeSession", incoming);
     verifyButton.classList.add("verified");
+document.getElementById("step-one").classList.add("done");
+document.getElementById("step-two").classList.add("done");
+setStatus("تم التحقق من اشتراكك في يوتيوب. يمكنك التصويت الآن.");
     setStatus("YouTube subscription verified. You can now vote.");
   } else if (result === "not_subscribed") {
     setStatus("This Google account does not appear to be subscribed to the channel. Subscribe on YouTube, then verify again.");
