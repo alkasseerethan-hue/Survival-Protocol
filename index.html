@@ -33,6 +33,77 @@ textarea { width:100%; min-height:85px; resize:vertical; background:#171717; col
 .small { color:#aaa; font-size:.9rem; }
 a { color:#fff; }
 @media(max-width:500px) { .character img { height:145px; } .actions .action-button { width:100%; } }
+.verify-banner {
+  background: #fff;
+  color: #111;
+  border: 2px solid #ccc;
+  border-radius: 12px;
+  padding: 20px;
+  text-align: center;
+  font-size: 24px;
+  font-weight: 800;
+}
+
+.steps {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 18px;
+  margin: 24px 0;
+}
+
+.step-card {
+  background: #fff;
+  color: #111;
+  border: 2px solid #ddd;
+  border-radius: 14px;
+  padding: 22px;
+  text-align: center;
+  transition: background .3s, color .3s;
+}
+
+.step-card h3 {
+  font-size: 23px;
+  margin-top: 0;
+}
+
+.step-card p {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.step-card button {
+  width: 100%;
+  padding: 14px;
+  border: 1px solid #aaa;
+  border-radius: 8px;
+  background: #f4f4f4;
+  color: #111;
+  font-size: 18px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.step-card.done {
+  background: #16803d;
+  color: #fff;
+  border-color: #16803d;
+}
+
+.step-card.done button {
+  background: #fff;
+  color: #16803d;
+}
+
+.verification-note {
+  color: #fff;
+  font-size: 24px;
+  font-weight: 800;
+  line-height: 1.8;
+  text-align: center;
+  padding: 22px;
+  background: #111;
+  border-radius: 12px;
+}
 </style>
 </head>
 <body>
