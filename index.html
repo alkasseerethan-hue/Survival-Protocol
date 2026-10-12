@@ -8,7 +8,7 @@
 :root { color-scheme: dark; --red:#a80000; --green:#16a34a; }
 * { box-sizing:border-box; }
 body { margin:0; min-height:100vh; color:#f5f5f5; font-family:Arial,Helvetica,sans-serif; background:#080808; }
-body::before { content:""; position:fixed; inset:0; background:linear-gradient(#000b,#000d),url("./background.jpg") center/cover fixed; z-index:-1; }
+body::before { content:""; position:fixed; inset:0; background:linear-gradient(#000b,#000d),url("./Background.jpg") center/cover fixed; z-index:-1; }
 main { width:min(1100px,94%); margin:auto; padding:30px 0 60px; }
 header { text-align:center; padding:20px 0 26px; }
 h1 { margin:0; letter-spacing:.13em; color:#f3f3f3; font-size:clamp(2rem,5vw,3.6rem); text-shadow:0 0 20px #a00; }
@@ -33,103 +33,22 @@ textarea { width:100%; min-height:85px; resize:vertical; background:#171717; col
 .small { color:#aaa; font-size:.9rem; }
 a { color:#fff; }
 @media(max-width:500px) { .character img { height:145px; } .actions .action-button { width:100%; } }
-.verify-banner {
-  background: #fff;
-  color: #111;
-  border: 2px solid #ccc;
-  border-radius: 12px;
-  padding: 20px;
-  text-align: center;
-  font-size: 24px;
-  font-weight: 800;
-}
-
-.steps {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 18px;
-  margin: 24px 0;
-}
-
-.step-card {
-  background: #fff;
-  color: #111;
-  border: 2px solid #ddd;
-  border-radius: 14px;
-  padding: 22px;
-  text-align: center;
-  transition: background .3s, color .3s;
-}
-
-.step-card h3 {
-  font-size: 23px;
-  margin-top: 0;
-}
-
-.step-card p {
-  font-size: 20px;
-  font-weight: 700;
-}
-
-.step-card button {
-  width: 100%;
-  padding: 14px;
-  border: 1px solid #aaa;
-  border-radius: 8px;
-  background: #f4f4f4;
-  color: #111;
-  font-size: 18px;
-  font-weight: 700;
-  cursor: pointer;
-}
-
-.step-card.done {
-  background: #16803d;
-  color: #fff;
-  border-color: #16803d;
-}
-
-.step-card.done button {
-  background: #fff;
-  color: #16803d;
-}
-
-.verification-note {
-  color: #fff;
-  font-size: 24px;
-  font-weight: 800;
-  line-height: 1.8;
-  text-align: center;
-  padding: 22px;
-  background: #111;
-  border-radius: 12px;
-}
 </style>
 </head>
 <body>
 <main>
 <header>
 <h1>SURVIVAL PROTOCOL</h1>
-<div class="steps">
-  <div class="step-card" id="step-one">
-    <h3>الخطوة الأولى</h3>
-    <p>اشترك في قناتنا على يوتيوب</p>
-    <button id="subscribe-channel" type="button">
-      اشترك في القناة
-    </button>
-  </div>
+<div class="subtitle">اختر الناجي</div>
+</header>
 
-  <div class="step-card" id="step-two">
-    <h3>الخطوة الثانية</h3>
-    <p>تحقّق من اشتراكك في يوتيوب</p>
-    <button id="verify-subscription" type="button">
-      تحقّق من الاشتراك
-    </button>
-    <div id="status" class="status">
-      يرجى إتمام الاشتراك ثم التحقق للانتقال إلى التصويت.
-    </div>
-  </div>
+<div class="notice">
+  <div id="status" class="status">تحقّق من اشتراكك بقناة يوتيوب قبل التصويت.</div>
 </div>
+
+<section>
+<h2>اختر شخصيتك</h2>
+<div id="characters" class="grid"></div>
 </section>
 
 <section class="panel" id="voting-panel">
@@ -156,25 +75,13 @@ a { color:#fff; }
 const API_URL = "https://soft-sun-0c0e.alkasseerethan.workers.dev";
 const CHANNEL_URL = "https://www.youtube.com/@EthanWinters.7.8";
 const characters = [
-  ["Leon S. Kennedy","leon.jpg"],
-  ["Chris Redfield","chris.jpg"],
-  ["Jill Valentine","jill.jpg"],
-  ["Ada Wong","ada.jpg"],
-  ["Claire Redfield","claire.jpg"],
-  ["Sherry Birkin","sherry.jpg"],
-  ["Rebecca Chambers","rebecca.jpg"],
-  ["Ethan Winters","ethan.jpg"],
-  ["Barry Burton","barry.jpg"],
-  ["Luis Sera","luis.jpg"],
-  ["Albert Wesker","wesker.jpg"],
-  ["Hunk","hunk.jpg"],
-  ["Jack Krauser","krauser.jpg"],
-  ["Alcina Dimitrescu","dimitrescu.jpg"],
-  ["Jack Baker","baker.jpg"],
-  ["Karl Heisenberg","heisenberg.jpg"],
-  ["Oswell E. Spencer","spencer.jpg"],
-  ["Ramon Salazar","salazar.jpg"],
-  ["Zeno","zeno.jpg"]
+  ["Leon S. Kennedy","Leon.jpg"],["Chris Redfield","Chris.jpg"],["Jill Valentine","Jill.jpg"],
+  ["Ada Wong","Ada.jpg"],["Claire Redfield","Claire.jpg"],["Sherry Birkin","Sherry.jpg"],
+  ["Rebecca Chambers","Rebecca.jpg"],["Ethan Winters","Ethan.jpg"],["Barry Burton","Barry.jpg"],
+  ["Luis Sera","Luis.jpg"],["Albert Wesker","Wesker.jpg"],["Hunk","Hunk.jpg"],
+  ["Jack Krauser","Krauser.jpg"],["Alcina Dimitrescu","Dimitrescu.jpg"],["Jack Baker","Baker.jpg"],
+  ["Karl Heisenberg","Heisenberg.jpg"],["Oswell E. Spencer","Spencer.jpg"],["Ramon Salazar","Salazar.jpg"],
+  ["Zeno","Zeno.jpg"]
 ];
 let selectedCharacter = "";
 let votes = {};
@@ -230,9 +137,6 @@ function readSessionFromUrl() {
     sessionToken = incoming;
     localStorage.setItem("youtubeSession", incoming);
     verifyButton.classList.add("verified");
-document.getElementById("step-one").classList.add("done");
-document.getElementById("step-two").classList.add("done");
-setStatus("تم التحقق من اشتراكك في يوتيوب. يمكنك التصويت الآن.");
     setStatus("YouTube subscription verified. You can now vote.");
   } else if (result === "not_subscribed") {
     setStatus("This Google account does not appear to be subscribed to the channel. Subscribe on YouTube, then verify again.");
