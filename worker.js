@@ -219,11 +219,19 @@ export default {
 
         const youtubeData = await youtubeResponse.json();
 
-        if (!youtubeResponse.ok) {
-          return redirect(
-            `${env.FRONTEND_URL}/?youtube=error`
-          );
-        }
+if (!youtubeResponse.ok) {
+  return new Response(
+    JSON.stringify({
+      error: "YouTube API request failed",
+      status: youtubeResponse.status,
+      details: youtubeData
+    }),
+    {
+      status: 502,
+      headers: CORS
+    }
+  );
+}
 
         if (
           !Array.isArray(youtubeData.items) ||
