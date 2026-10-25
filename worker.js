@@ -26,6 +26,12 @@ export default { async fetch(request,env) {
   await env.VOTES_KV.delete(`oauthstate:${state}`);
   const tr=await fetch("https://oauth2.googleapis.com/token",{method:"POST",headers:{"Content-Type":"application/x-www-form-urlencoded"},body:new URLSearchParams({code,client_id:env.GOOGLE_CLIENT_ID,client_secret:env.GOOGLE_CLIENT_SECRET,redirect_uri:env.REDIRECT_URI,grant_type:"authorization_code"})});
   const td=await tr.json();
+  const ir = await fetch("https://www.googleapis.com/oauth2/v3/userinfo", {
+ headers: { Authorization: `Bearer ${td.access_token}` }
+});
+if (!ir.ok) return redirect(`${env.FRONTEND_URL}/?youtube=error`);
+const identity = await ir.json();
+if (!identity.sub) return redirect(`${env.FRONTEND_URL}/?youtube=error`);
   if(!tr.ok||!td.access_token) return redirect(`${env.FRONTEND_URL}/?youtube=error`);
   const yu=new URL("https://www.googleapis.com/youtube/v3/subscriptions");
   yu.searchParams.set("part","id");yu.searchParams.set("mine","true");yu.searchParams.set("forChannelId",env.YOUTUBE_CHANNEL_ID);yu.searchParams.set("maxResults","1");
