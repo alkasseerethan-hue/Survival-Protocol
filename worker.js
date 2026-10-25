@@ -234,13 +234,21 @@ if (!youtubeResponse.ok) {
 }
 
         if (
-          !Array.isArray(youtubeData.items) ||
-          youtubeData.items.length === 0
-        ) {
-          return redirect(
-            `${env.FRONTEND_URL}/?youtube=not_subscribed`
-          );
-        }
+  !Array.isArray(youtubeData.items) ||
+  youtubeData.items.length === 0
+) {
+  return new Response(
+    JSON.stringify({
+      error: "Subscription not found",
+      channelId: env.YOUTUBE_CHANNEL_ID,
+      items: youtubeData.items ?? null
+    }),
+    {
+      status: 403,
+      headers: CORS
+    }
+  );
+}
 
         // إنشاء رمز دائم للحساب الموثّق
         session = crypto.randomUUID();
