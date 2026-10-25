@@ -8,7 +8,7 @@
 :root { color-scheme: dark; --red:#a80000; --green:#16a34a; }
 * { box-sizing:border-box; }
 body { margin:0; min-height:100vh; color:#f5f5f5; font-family:Arial,Helvetica,sans-serif; background:#080808; }
-body::before { content:""; position:fixed; inset:0; background:linear-gradient(#000b,#000d),url("./Background.jpg") center/cover fixed; z-index:-1; }
+body::before { content:""; position:fixed; inset:0; background:linear-gradient(#000b,#000d),url("./background.jpg") center/cover fixed; z-index:-1; }
 main { width:min(1100px,94%); margin:auto; padding:30px 0 60px; }
 header { text-align:center; padding:20px 0 26px; }
 h1 { margin:0; letter-spacing:.13em; color:#f3f3f3; font-size:clamp(2rem,5vw,3.6rem); text-shadow:0 0 20px #a00; }
@@ -75,13 +75,25 @@ a { color:#fff; }
 const API_URL = "https://soft-sun-0c0e.alkasseerethan.workers.dev";
 const CHANNEL_URL = "https://www.youtube.com/@EthanWinters.7.8";
 const characters = [
-  ["Leon S. Kennedy","Leon.jpg"],["Chris Redfield","Chris.jpg"],["Jill Valentine","Jill.jpg"],
-  ["Ada Wong","Ada.jpg"],["Claire Redfield","Claire.jpg"],["Sherry Birkin","Sherry.jpg"],
-  ["Rebecca Chambers","Rebecca.jpg"],["Ethan Winters","Ethan.jpg"],["Barry Burton","Barry.jpg"],
-  ["Luis Sera","Luis.jpg"],["Albert Wesker","Wesker.jpg"],["Hunk","Hunk.jpg"],
-  ["Jack Krauser","Krauser.jpg"],["Alcina Dimitrescu","Dimitrescu.jpg"],["Jack Baker","Baker.jpg"],
-  ["Karl Heisenberg","Heisenberg.jpg"],["Oswell E. Spencer","Spencer.jpg"],["Ramon Salazar","Salazar.jpg"],
-  ["Zeno","Zeno.jpg"]
+  ["Leon S. Kennedy","leon.jpg"],
+  ["Chris Redfield","chris.jpg"],
+  ["Jill Valentine","jill.jpg"],
+  ["Ada Wong","ada.jpg"],
+  ["Claire Redfield","claire.jpg"],
+  ["Sherry Birkin","sherry.jpg"],
+  ["Rebecca Chambers","rebecca.jpg"],
+  ["Ethan Winters","ethan.jpg"],
+  ["Barry Burton","barry.jpg"],
+  ["Luis Sera","luis.jpg"],
+  ["Albert Wesker","wesker.jpg"],
+  ["Hunk","hunk.jpg"],
+  ["Jack Krauser","krauser.jpg"],
+  ["Alcina Dimitrescu","dimitrescu.jpg"],
+  ["Jack Baker","baker.jpg"],
+  ["Karl Heisenberg","heisenberg.jpg"],
+  ["Oswell E. Spencer","spencer.jpg"],
+  ["Ramon Salazar","salazar.jpg"],
+  ["Zeno","zeno.jpg"]
 ];
 let selectedCharacter = "";
 let votes = {};
