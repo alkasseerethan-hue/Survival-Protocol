@@ -220,6 +220,35 @@ export default {
         const youtubeData = await youtubeResponse.json();
 
 if (!youtubeResponse.ok) {
+    return new Response(
+    JSON.stringify({
+      error: "YouTube API request failed",
+      status: youtubeResponse.status,
+      details: youtubeData
+    }),
+    {
+      status: 502,
+      headers: CORS
+    }
+  );
+}
+
+if (
+  !Array.isArray(youtubeData.items) ||
+  youtubeData.items.length === 0
+) {
+  return new Response(
+    JSON.stringify({
+      error: "Subscription not found",
+      channelId: env.YOUTUBE_CHANNEL_ID,
+      items: youtubeData.items ?? null
+    }),
+    {
+      status: 403,
+      headers: CORS
+    }
+  );
+}
   return new Response(
     JSON.stringify({
       error: "YouTube API request failed",
