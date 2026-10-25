@@ -14,7 +14,7 @@ export default { async fetch(request,env) {
   g.searchParams.set("client_id",env.GOOGLE_CLIENT_ID);
   g.searchParams.set("redirect_uri",env.REDIRECT_URI);
   g.searchParams.set("response_type","code");
-  g.searchParams.set("scope","https://www.googleapis.com/auth/youtube.readonly");
+  g.searchParams.set("scope","https://www.googleapis.com/auth/youtube.readonly openid");
   g.searchParams.set("state",state);
   g.searchParams.set("prompt","select_account");
   g.searchParams.set("access_type","online");
